@@ -1,7 +1,7 @@
 {
   "name": "node-id3-promise",
-  "version": "1.0.1",
-  "description": "Pure JavaScript ID3 Tag writer/reader with promise style",
+  "version": "2.0.0",
+  "description": "ID3-Tag library for NodeJS promise based",
   "author": "Chriptus <amcmmm13@hotmail.com> (https://github.com/chriptus13)",
   "license": "MIT",
   "homepage": "https://github.com/chriptus13/node-id3-promise#readme",
@@ -24,6 +24,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "node-id3": "^0.1.19"
+    "iconv-lite": "^0.6.2"
   }
 }

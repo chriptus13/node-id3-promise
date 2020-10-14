@@ -1,6 +1,7 @@
 # node-id3-promise
 
-node-id3-promise is a wrapper around [node-id3](https://www.npmjs.com/package/node-id3) package to provide promise style Javascript.
+node-id3-promise is a ID3-Tag library for NodeJS. 
+It uses promises and it's based on [node-id3](https://www.npmjs.com/package/node-id3) (callbacks style).
 
 ## Installation
 ```
@@ -9,84 +10,58 @@ npm install node-id3-promise
 
 ## Usage
 
+### Write tags
+
 ```javascript
 const NodeID3 = require('node-id3-promise')
 
-/* Variables found in the following usage examples */
+// Path to the MP3 file
+const filePath = '/path/to/(mp3)file'
 
-//  file can be a buffer or string with the path to a file
-let file = './path/to/(mp3)file' || new Buffer("Some Buffer of a (mp3) file")
-let filebuffer = new Buffer("Some Buffer of a (mp3) file")
-let filepath = './path/to/(mp3)file'
-```
-
-### Creating/Writing tags
-
-```javascript
-//  Define the tags for your file using the ID (e.g. APIC) or the alias (see at bottom)
-let tags = {
-  title: "Tomorrow",
-  artist: "Kevin Penkin",
-  album: "TVアニメ「メイドインアビス」オリジナルサウンドトラック",
-  APIC: "path-to-image",
-  TRCK: "27"
+//  Tags for your file using the ID (e.g. APIC) or the alias (see at bottom)
+const tags = {
+  title: 'Talking to Myself',
+  artist: 'Linkin Park',
+  album: 'One More Light',
+  genre: 'Pop Rock',
+  trackNumber: '3',
+  year: '2017',
+  image: '/path/to/(jpg)file'
 }
 
-//  Create a ID3-Frame buffer from passed tags
-NodeID3.create(tags)
-    .then(frame => { })
-    .catch(err => { })
-
-//  Write ID3-Frame into (.mp3) file
-NodeID3.write(tags, file)
-    .then(buffer => { }) //  Buffer is only returned if a buffer was passed as file
-    .catch(err => { })
-
-//  Update existing ID3-Frame with new/edited tags
-NodeID3.update(tags, file)
-    .then(buffer => { })  //  Buffer is only returned if a buffer was passed as file
-    .catch(err => { })
+NodeID3.write(tags, filePath)
+  .then(() => {...})
+  .catch(err => {...})
 ```
 
-### Reading ID3-Tags
+### Read tags
 
 ```javascript
-NodeID3.read(file)
-    .then(tags => {
-        /*
-        tags: {
-            title: "Tomorrow",
-            artist: "Kevin Penkin",
-            image: {
-                mime: "jpeg",
-                type: {
-                    id: 3,
-                    name: "front cover"
-                },
-                description: String,
-                imageBuffer: Buffer
-            },
-            raw: {
-                TIT2: "Tomorrow",
-                TPE1: "Kevin Penkin",
-                APIC: Object (See above)
-            }
-        } */
-    })
-    .catch(err => { })
+const NodeID3 = require('node-id3-promise')
+
+// Path to the MP3 file
+const filePath = '/path/to/(mp3)file'
+
+NodeID3.read(filePath)
+    .then(tags => {...})
+    .catch(err => {...})
 ```
 
-### Removing ID3-Tags from file/buffer
+### Remove tags
 
 ```javascript
+const NodeID3 = require('node-id3-promise')
+
+// Path to the MP3 file
+const filePath = '/path/to/(mp3)file'
+
 NodeID3.removeTags(filepath)
-    .then(() => { })
-    .catch(err => { })
-
-let bufferWithoutID3Frame = NodeID3.removeTagsFromBuffer(filebuffer)  //  Returns Buffer
+    .then(() => {...})
+    .catch(err => {...})
 ```
 
 ## Supported aliases
+
 ```
 album:
 bpm:
@@ -188,7 +163,9 @@ userDefinedUrl: [{
 ```
 
 ### Supported raw IDs
+
 You can also use the currently supported raw tags like TALB instead of album etc.
+
 ```
 album:                "TALB"
 bpm:                  "TBPM"
@@ -230,22 +207,22 @@ encodingTechnology:   "TSSE"
 year:                 "TYER"
 comment:              "COMM"
 image:                "APIC"
-unsynchronisedLyrics  "USLT"
-userDefinedText       "TXXX"
-popularimeter         "POPM"
-private               "PRIV"
-chapter               "CHAP"
-commercialUrl         "WCOM"
-copyrightUrl          "WCOP"
-fileUrl               "WOAF"
-artistUrl             "WOAR"
-audioSourceUrl        "WOAS"
-radioStationUrl       "WORS"
-paymentUrl            "WPAY"
-publisherUrl          "WPUB"
-userDefinedUrl        "WXXX"
+unsynchronisedLyrics: "USLT"
+userDefinedText:      "TXXX"
+popularimeter:        "POPM"
+private:              "PRIV"
+chapter:              "CHAP"
+commercialUrl:        "WCOM"
+copyrightUrl:         "WCOP"
+fileUrl:              "WOAF"
+artistUrl:            "WOAR"
+audioSourceUrl:       "WOAS"
+radioStationUrl:      "WORS"
+paymentUrl:           "WPAY"
+publisherUrl:         "WPUB"
+userDefinedUrl:       "WXXX"
 ```
 
 ### TODOs
 
-* Rewrite node-id3 code to use `fs-promise`.
+* Make tests.
