@@ -1,6 +1,6 @@
 {
   "name": "node-id3-promise",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "ID3-Tag library for NodeJS promise based",
   "author": "Chriptus <amcmmm13@hotmail.com> (https://github.com/chriptus13)",
   "license": "MIT",
